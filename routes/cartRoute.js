@@ -11,7 +11,7 @@ const {
 const { protect } = require('../middleware/authMiddleware');
 
 // ✅ Protected Routes
-router.post('/add', protect, addToCart);
+router.post('/add',protect , addToCart);
 router.get('/', protect, getCart);
 router.delete('/remove/:productId', protect, removeFromCart);
 router.delete('/clear', protect, clearCart);

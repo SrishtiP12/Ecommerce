@@ -1,6 +1,8 @@
 const express = require('express');
 const connectDb = require('./config/db');
 const dotenv = require('dotenv');
+const cors = require('cors');
+
 
 const userRoutes = require('./routes/userRoute');
 const productRoutes = require('./routes/productRoute');
@@ -12,6 +14,13 @@ connectDb();
 
 const app = express();
 app.use(express.json());
+
+const corsOptions = {
+  origin: 'http://localhost:3000', // Only allow frontend on this URL
+  credentials: true, // If using cookies, authorization headers, etc.
+};
+
+app.use(cors(corsOptions));
 
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);

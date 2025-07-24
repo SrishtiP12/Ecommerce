@@ -5,11 +5,21 @@ const Product = require('../models/productModel');
 const addToCart = async (req, res) => {
     try {
         console.log('Add to Cart route hit');
-        const { productId, quantity } = req.body;
-        const product = await Product.findById(productId);
-        if (!product) {
+        console.log(req.body);
+        
+        const { product } = req.body;
+        const productId = product._id;
+        const quantity = product.stock;
+        console.log("productId :: "+productId + " , quantity : "+quantity);
+        
+        const productData = await Product.findById(productId);
+        console.log("product found"+productData);
+        
+        if (!productData) {
             return res.status(404).json({ message: 'Product not found' });
         }
+        console.log("user : "+req?.user._id);
+        
         let cart = await Cart.findOne({ user: req.user._id });
         if (cart) {
             const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
